@@ -56,6 +56,7 @@ private:
 	// weights
 	float ****wl1;
 	float *bl1;
+	float **nl1;
 	float ****wl2;
 	float *bl2;
 	float **wfc1;
@@ -172,6 +173,18 @@ public:
 		fin->read(reinterpret_cast<char*>(a), sizeof(float) * mi);
 	}
 
+	void getNorm(ifstream *fin, float **n, int mj)
+	{
+		for (int i = 0; i < 4; i++) {
+			fin->read(reinterpret_cast<char*>(n[i]), sizeof(float) * mj);
+		}
+	}
+
+	inline float batchNorm(float x, float gamma, float beta, float mean, float var)
+	{
+		return ((x - mean) / sqrtf(var + 0.001f)) * gamma + beta;
+	}
+
 	voiceCNN(string path)
 	{
 		l1 = (float***)createArray(26, 26, 32, sizeof(float));
@@ -183,6 +196,7 @@ public:
 
 		wl1 = (float****)createArray(3, 3, 1, 32, sizeof(float));
 		bl1 = (float*)calloc(32, sizeof(float));
+		nl1 = (float**)createArray(4, 32, sizeof(float));
 		wl2 = (float****)createArray(3, 3, 32, 64, sizeof(float));
 		bl2 = (float*)calloc(64, sizeof(float));
 		wfc1 = (float**)createArray(9216, 100, sizeof(float));
@@ -198,8 +212,10 @@ public:
 
 		getWeights4(&fin, wl1, 3, 3, 1, 32);
 		getBias(&fin, bl1, 32);
+		getNorm(&fin, nl1, 32);
 		getWeights4(&fin, wl2, 3, 3, 32, 64);
 		getBias(&fin, bl2, 64);
+
 		getWeights2(&fin, wfc1, 9216, 100);
 		getBias(&fin, bfc1, 100);
 		getWeights2(&fin, wout, 100, 10);
@@ -216,6 +232,7 @@ public:
 		free(outSoft);
 
 		freeArray(3, 3, 1, 32, (void****)wl1);
+		freeArray(4, 32, (void**)nl1);
 		freeArray(3, 3, 32, 64, (void****)wl2);
 		freeArray(9216, 100, (void**)wfc1);
 		freeArray(100, 10, (void**)wout);
@@ -250,7 +267,40 @@ public:
 			}
 		}
 
-		
+		float rmeanl1[32] = { 0.0f };
+		float rvarl1[32] = { 0.0f };
+		for (int k = 0; k < 32; k++) {
+
+			for (int i = 0; i < 26; i++) {
+				for (int j = 0; j < 26; j++) {
+					rmeanl1[k] += l1[i][j][k];
+				}
+			}
+
+			//moving_mean = moving_mean * momentum + mean(batch) * (1 - momentum)
+			rmeanl1[k] /= 676.0f; // 26 * 26
+			//rmeanl1[k] = rmeanl1[k] * 0.01f + nl1[2][k] * 0.99f;
+			rmeanl1[k] = nl1[2][k];
+
+			for (int i = 0; i < 26; i++) {
+				for (int j = 0; j < 26; j++) {
+					rvarl1[k] += powf(l1[i][j][k] - rmeanl1[k], 2);
+				}
+			}
+			//moving_var = moving_var * momentum + var(batch) * (1 - momentum)
+			rvarl1[k] /= 676.0f; // 26 * 26
+			rvarl1[k] = nl1[3][k];
+
+			for (int i = 0; i < 26; i++) {
+				for (int j = 0; j < 26; j++) {
+					// normalization
+					//z1_hat = (x - pop_mean) / sqrt(pop_var + epsilon)
+					//	BN1 = gamma * z1_hat + beta
+					l1[i][j][k] = batchNorm(l1[i][j][k], nl1[0][k], nl1[1][k],
+						rmeanl1[k], rvarl1[k]);
+				}
+			}
+		}
 
 		// L2, kernel=3x3, stride=1, padding=0
 		for (int k = 0; k < 64; k++) {
@@ -302,14 +352,17 @@ public:
 			for (int l = 0; l < 9216; l++)
 			{
 				int x = l / 768;
-				int y = (l / 12) % 12;
+				int y = (l / 64) % 12;
 				int z = l % 64;
 				fc1[k] += l3[x][y][z] * wfc1[l][k];
+				//if (l == 12) cout << l3[x][y][z] << endl;
 			}
 
 			fc1[k] += bfc1[k]; // bias
 			fc1[k] = relu(fc1[k]); // activation
 		}
+
+		//cout << fc1[63] << endl;
 
 		// Output
 		for (int k = 0; k < 10; k++)
@@ -331,6 +384,7 @@ public:
 				s += exp(out[j]);
 			}
 			outSoft[i] = exp(out[i]) / s;
+			cout << i << " " << outSoft[i] << endl;
 		}
 
 		return (int)(max_element(outSoft, outSoft + 10) - outSoft);
@@ -342,7 +396,7 @@ public:
 int main() {
 
 	Mat img;
-	img = imread("D:\\Storage\\Datasets\\voice\\images\\extracted\\test\\sit\\sit1-550.png");
+	img = imread("D:\\Storage\\Datasets\\voice\\images\\extracted\\test\\dance\\dance1-379.png");
 
 	float** imgIn = (float**)voiceCNN::createArray(28, 28, sizeof(float));
 

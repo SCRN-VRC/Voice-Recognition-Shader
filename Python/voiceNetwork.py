@@ -8,6 +8,7 @@ from sklearn.metrics import classification_report
 
 from tensorflow.keras import layers
 from tensorflow.keras import models
+from tensorflow.keras.callbacks import EarlyStopping
 
 from keras import backend as K
 from keras.preprocessing.image import ImageDataGenerator
@@ -20,10 +21,10 @@ img_width, img_height = 28, 28
 
 train_data_dir = 'D:\\Storage\\Datasets\\voice\\images\\extracted\\train'
 validation_data_dir = 'D:\\Storage\\Datasets\\voice\\images\\extracted\\test'
-nb_train_samples = 3277
-nb_validation_samples = 2096
-epochs = 50
-batch_size = 300
+nb_train_samples = 6047
+nb_validation_samples = 2533
+epochs = 200
+batch_size = 800
 
 if K.image_data_format() == 'channels_first':
     input_shape = (1, img_width, img_height)
@@ -33,6 +34,7 @@ else:
 model = models.Sequential([
     layers.Input(shape=input_shape),
     layers.Conv2D(32, 3, activation='relu'),
+    layers.BatchNormalization(),
     layers.Conv2D(64, 3, activation='relu'),
     layers.MaxPooling2D(),
     layers.Dropout(0.25),
@@ -42,19 +44,19 @@ model = models.Sequential([
     layers.Dense(10, activation='softmax'),
 ])
 
-if 0:
+if 1:
     model.compile(loss='categorical_crossentropy',
                   optimizer='adam',
                   metrics=['accuracy'])
     
     # this is the augmentation configuration we will use for training
     train_datagen = ImageDataGenerator(
-        #brightness_range=[-0.1, 0.1],
+        brightness_range=[.8, 1.2],
         rescale=1./255)
     
     # this is the augmentation configuration we will use for testing:
     test_datagen = ImageDataGenerator(
-        #brightness_range=[-0.1, 0.1],
+        brightness_range=[.8, 1.2],
         rescale=1./255)
     
     train_generator = train_datagen.flow_from_directory(
@@ -70,12 +72,18 @@ if 0:
         batch_size=batch_size,
         shuffle=False)
     
+    early_stopping = EarlyStopping(
+        monitor='val_accuracy', 
+        patience=12, 
+        min_delta=0.001)
+    
     history = model.fit_generator(
         train_generator,
         steps_per_epoch=nb_train_samples // batch_size,
         epochs=epochs,
         validation_data=validation_generator,
-        validation_steps=nb_validation_samples // batch_size)
+        validation_steps=nb_validation_samples // batch_size,
+        callbacks=[early_stopping])
     
     # graphs
     metrics = history.history
@@ -125,7 +133,12 @@ def write_weights2(array, mode='ab'):
             for j in range(0, len(array[0])):
                 f.write(struct.pack('f', array[i][j]))
         f.close()
-                
+        
+def write_norm(array):
+    with open(dest, 'ab') as f:
+        for i in range(0, len(array)):
+            f.write(struct.pack('f', array[i]))
+        f.close()
                 
 def write_bias(array):
     with open(dest, 'ab') as f:
@@ -135,15 +148,19 @@ def write_bias(array):
         
 write_weights4(weights[0], 'wb')
 write_bias(weights[1])
-write_weights4(weights[2])
-write_bias(weights[3])
-write_weights2(weights[4])
-write_bias(weights[5])
-write_weights2(weights[6])
+write_norm(weights[2])
+write_norm(weights[3])
+write_norm(weights[4])
+write_norm(weights[5])
+write_weights4(weights[6])
 write_bias(weights[7])
+write_weights2(weights[8])
+write_bias(weights[9])
+write_weights2(weights[10])
+write_bias(weights[11])
 
 # Predict
-img = load_img('D:\\Storage\\Datasets\\voice\\images\\extracted\\test\\sit\\sit1-550.png')
+img = load_img('D:\\Storage\\Datasets\\voice\\images\\extracted\\test\\dance\\dance1-379.png')
 # convert to numpy array
 img_np = img_to_array(img) / 255.
 new_image = expand_dims(img_np[:,:,0], 0)

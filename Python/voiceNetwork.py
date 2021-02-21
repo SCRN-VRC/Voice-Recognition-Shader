@@ -21,10 +21,10 @@ img_width, img_height = 28, 28
 
 train_data_dir = 'D:\\Storage\\Datasets\\voice\\images\\extracted\\train'
 validation_data_dir = 'D:\\Storage\\Datasets\\voice\\images\\extracted\\test'
-nb_train_samples = 6047
-nb_validation_samples = 2533
+nb_train_samples = 22411
+nb_validation_samples = 2593
 epochs = 200
-batch_size = 800
+batch_size = 2000
 
 if K.image_data_format() == 'channels_first':
     input_shape = (1, img_width, img_height)
@@ -74,7 +74,7 @@ if 1:
     
     early_stopping = EarlyStopping(
         monitor='val_accuracy', 
-        patience=12, 
+        patience=10, 
         min_delta=0.001)
     
     history = model.fit_generator(

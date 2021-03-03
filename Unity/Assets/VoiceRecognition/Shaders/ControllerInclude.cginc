@@ -11,7 +11,7 @@
 #define txMyPos                             uint2(7, 1)
 
 static const float animLength[12] = {
-    6, 6, 4, 4, 7, 5, 5, 36, 19, 7, 6, 7
+    6, 6, 4, 4, 7, 5, 5, 36, 28, 7, 6, 7
 };
 
 #define ANIM_IDLE                           0
@@ -52,6 +52,7 @@ static const float animLength[12] = {
 #define eps                                 0.001
 #define DEFAULT_TIMER                       150.0
 #define SPEED                               0.014
+#define SPEED_MULTIPLIER                    55.0
 #define DOGGO_DIST                          2.0
 #define PI2                                 1.570796326795
 

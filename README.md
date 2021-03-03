@@ -15,5 +15,4 @@ https://bowlroll.net/file/58197
 https://github.com/VRLabs/VRChat-Avatars-3.0
 World Constraint by lindesu
 
-Thanks d4rkpl4y3r and Merlin for the help on the code.
-And thanks to everyone that provided training data for the voice recognition: FreelancerB10, Morioh, Reda-Ou, ScruffyRuffles, orels1, uoppoH, んなあぁ
+Thanks d4rkpl4y3r and Merlin for the help on the code. And thanks to everyone that provided training data for the voice recognition: FreelancerB10, Morioh, Reda-Ou, ScruffyRuffles, orels1, uoppoH, んなあぁ

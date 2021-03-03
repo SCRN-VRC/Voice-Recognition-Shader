@@ -128,13 +128,13 @@
                 float3 myPos = _StateTex[txMyPos];
                 float3 doggoPos = _StateTex[txDoggoRootPos];
                 float2 vFontSize = float2(16.0, 30.0);
-                col.xyz = lerp( col.xyz, float3(1.0, 0.0, 0.0), PrintValue( ((i.uv - float2(0.2, 0.5)) * _MainTex_TexelSize.zw) / vFontSize, myPos.x, 3.0, 3.0));
-                col.xyz = lerp( col.xyz, float3(1.0, 0.0, 0.0), PrintValue( ((i.uv - float2(0.3, 0.5)) * _MainTex_TexelSize.zw) / vFontSize, myPos.y, 3.0, 3.0));
-                col.xyz = lerp( col.xyz, float3(1.0, 0.0, 0.0), PrintValue( ((i.uv - float2(0.4, 0.5)) * _MainTex_TexelSize.zw) / vFontSize, myPos.z, 3.0, 3.0));
+                col.xyz = lerp( col.xyz, float3(1.0, 0.0, 0.0), PrintValue( ((i.uv - float2(0.6, 0.85)) * _MainTex_TexelSize.zw) / vFontSize, myPos.x, 3.0, 3.0));
+                col.xyz = lerp( col.xyz, float3(1.0, 0.0, 0.0), PrintValue( ((i.uv - float2(0.7, 0.85)) * _MainTex_TexelSize.zw) / vFontSize, myPos.y, 3.0, 3.0));
+                col.xyz = lerp( col.xyz, float3(1.0, 0.0, 0.0), PrintValue( ((i.uv - float2(0.8, 0.85)) * _MainTex_TexelSize.zw) / vFontSize, myPos.z, 3.0, 3.0));
 
-                col.xyz = lerp( col.xyz, float3(0.0, 0.0, 1.0), PrintValue( ((i.uv - float2(0.2, 0.6)) * _MainTex_TexelSize.zw) / vFontSize, doggoPos.x, 3.0, 3.0));
-                col.xyz = lerp( col.xyz, float3(0.0, 0.0, 1.0), PrintValue( ((i.uv - float2(0.3, 0.6)) * _MainTex_TexelSize.zw) / vFontSize, doggoPos.y, 3.0, 3.0));
-                col.xyz = lerp( col.xyz, float3(0.0, 0.0, 1.0), PrintValue( ((i.uv - float2(0.4, 0.6)) * _MainTex_TexelSize.zw) / vFontSize, doggoPos.z, 3.0, 3.0));
+                col.xyz = lerp( col.xyz, float3(0.0, 0.0, 1.0), PrintValue( ((i.uv - float2(0.6, 0.8)) * _MainTex_TexelSize.zw) / vFontSize, doggoPos.x, 3.0, 3.0));
+                col.xyz = lerp( col.xyz, float3(0.0, 0.0, 1.0), PrintValue( ((i.uv - float2(0.7, 0.8)) * _MainTex_TexelSize.zw) / vFontSize, doggoPos.y, 3.0, 3.0));
+                col.xyz = lerp( col.xyz, float3(0.0, 0.0, 1.0), PrintValue( ((i.uv - float2(0.8, 0.8)) * _MainTex_TexelSize.zw) / vFontSize, doggoPos.z, 3.0, 3.0));
 
                 col.xyz = pow(col.xyz, 2);
                 // apply fog

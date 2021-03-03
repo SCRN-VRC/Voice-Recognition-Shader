@@ -11,6 +11,7 @@
         ZWrite Off
         ZTest Always
         Cull Off
+        Blend SrcAlpha OneMinusSrcAlpha
         
         Pass
         {
@@ -90,17 +91,17 @@
                 return o;
             }
 
-            float frag (v2f i) : SV_Target
+            float4 frag(v2f i) : SV_TARGET
             {
                 clip(i.uv.z);
                 if (isOrthographic() || IsInMirror()) discard;
 
-                float col = 0;
-                if (isVRHandCamera())
-                {
-                    col = _MainTex.Load(int3(i.uv.xy * _MainTex_TexelSize.zw, 0));
-                }
-                else discard;
+                float4 col = 0;
+                #if UNITY_SINGLE_PASS_STEREO
+                    i.uv.x += .25 - .5 * unity_StereoEyeIndex;
+                #endif
+                col.r = _MainTex.Load(int3(i.uv.xy * _MainTex_TexelSize.zw, 0)).r;
+                col.a = isVRHandCamera() ? 1.0 : col.r;
 
                 return col;
             }

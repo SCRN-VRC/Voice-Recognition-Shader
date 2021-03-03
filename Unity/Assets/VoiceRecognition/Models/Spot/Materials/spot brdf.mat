@@ -90,7 +90,7 @@ Material:
     m_Floats:
     - _BumpScale: 1
     - _Culling: 2
-    - _Cutoff: 0.5
+    - _Cutoff: 0.8
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _Gloss: 1

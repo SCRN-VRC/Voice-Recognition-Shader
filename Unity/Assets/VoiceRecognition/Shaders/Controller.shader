@@ -126,7 +126,7 @@
                     };
 
                     uint x;
-                    for (x = 1; x < 8; x++)
+                    for (x = 1; x < 5; x++)
                     {
                         uint4 val = floor(_Buffer.Load(uint3(x, 0, 0)));
                         [unroll]
@@ -160,7 +160,9 @@
                             (doggoAngleAnims.x - ang) > eps ? ANIM_TURN_RIGHT : ANIM_IDLE;
                         doggoAngleAnims.x = ang;
                         doggoAngleAnims.w = mod(doggoAngleAnims.w + unity_DeltaTime.x * 8.0, animLength[ANIM_TURN_LEFT]);
-                        //doggoState.x = STATE_FOLLOW;
+                        
+                        // doggoState.x = STATE_ANIMATION;
+                        // doggoState.y = ANIM_SPEAK;
                     }
                     else if (doggoState.x == STATE_LISTEN)
                     {
@@ -249,7 +251,7 @@
                         // Animations
                         float3 distToTarget = i.centerPos - doggoPos.xyz;
 
-                        float3 vel = count >= 0.0333 ? 0.0 : clamp(distToTarget / 40.0, -SPEED, SPEED);
+                        float3 vel = clamp(distToTarget / 40.0, -SPEED, SPEED) * unity_DeltaTime.z * SPEED_MULTIPLIER;
 
                         lookMat = lookAt(doggoPos.xyz, i.centerPos);
                         float ang = atan(lookMat[0].x / lookMat[0].z);

@@ -33,7 +33,7 @@ Shader "VoiceRecognition/BRDF DoggoSkelly"
 			#include "Lighting.cginc"
 			#include "AutoLight.cginc"
 			#include "UnityPBSLighting.cginc"
-            #include "../../Shaders/ControllerInclude.cginc"
+            #include "../../../Shaders/ControllerInclude.cginc"
 
 			float4 _Color;
 			float4 _EmissionColor;
@@ -56,7 +56,7 @@ Shader "VoiceRecognition/BRDF DoggoSkelly"
                 float4 tangent : TANGENT;
                 float2 uv : TEXCOORD0;
                 float2 uv2 : TEXCOORD1;
-                float2 uv3 : TEXCOORD3;
+                float2 uv4 : TEXCOORD4;
             };
 
 			struct v2f
@@ -67,13 +67,13 @@ Shader "VoiceRecognition/BRDF DoggoSkelly"
 				float3 wPos : TEXCOORD0;
 				float3 T : TEXCOORD5;
 				float3 B : TEXCOORD6;
-				SHADOW_COORDS(4)
+				SHADOW_COORDS(3)
 				#else
 				V2F_SHADOW_CASTER;
 				#endif
 				float2 uv : TEXCOORD1;
                 float2 uv2 : TEXCOORD2;
-                float2 uv3 : TEXCOORD3;
+                float2 uv4 : TEXCOORD4;
 			};
 
             float3 rotMat(float3 angles, float3 vec)
@@ -194,7 +194,7 @@ Shader "VoiceRecognition/BRDF DoggoSkelly"
                 // Text box
                 if (all(v.uv2 < 0.004))
                 {
-                	float scaledTime = saturate(animTime / animLength[ANIM_SPEAK]);
+                	float scaledTime = saturate(animTime / (animLength[ANIM_SPEAK] - 1.0));
                 	v.vertex.xz *= anim == ANIM_SPEAK ? speechBubbleCurve(scaledTime) : 0.0;
                 }
 
@@ -248,7 +248,7 @@ Shader "VoiceRecognition/BRDF DoggoSkelly"
 				#endif
 				o.uv = TRANSFORM_TEX(v.uv.xy, _MainTex);
                 o.uv2 = v.uv2;
-                o.uv3 = v.uv3;
+                o.uv4 = v.uv4;
 				return o;
 			}
 
@@ -270,13 +270,16 @@ Shader "VoiceRecognition/BRDF DoggoSkelly"
 				float3 normal = BlendNormals(i.normal, worldNormal);
 				float4 texCol = tex2D(_MainTex, i.uv) * _Color;
 
+                bool isSpeechBubble = all(i.uv2 < 0.004);
+                float4 speechBubble = tex2D(_SpeechTex, i.uv4);
+
                 if (i.uv2.y < 0.05 && i.uv2.x > 0.02)
                 {
-                    texCol = tex2D(_WingsTex, i.uv3);
+                    texCol = tex2D(_WingsTex, i.uv4);
                 }
-                else if (all(i.uv2 < 0.004))
+                else if (isSpeechBubble)
                 {
-                	texCol = tex2D(_SpeechTex, i.uv3);
+                	texCol = speechBubble;
                 }
 
 				clip(texCol.a - _Cutoff);
@@ -317,6 +320,7 @@ Shader "VoiceRecognition/BRDF DoggoSkelly"
 					light, indirectLight
 				);
 				col += tex2D(_EmissionMap, i.uv) * _EmissionColor;
+                col = isSpeechBubble ? speechBubble : col;
 
 				#ifdef UNITY_PASS_FORWARDADD
 				return float4(col, 0);

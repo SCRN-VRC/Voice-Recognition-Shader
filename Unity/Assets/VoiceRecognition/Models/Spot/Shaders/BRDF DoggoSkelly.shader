@@ -56,7 +56,7 @@ Shader "VoiceRecognition/BRDF DoggoSkelly"
                 float4 tangent : TANGENT;
                 float2 uv : TEXCOORD0;
                 float2 uv2 : TEXCOORD1;
-                float2 uv4 : TEXCOORD4;
+                float2 uv4 : TEXCOORD3;
             };
 
 			struct v2f
@@ -67,13 +67,13 @@ Shader "VoiceRecognition/BRDF DoggoSkelly"
 				float3 wPos : TEXCOORD0;
 				float3 T : TEXCOORD5;
 				float3 B : TEXCOORD6;
-				SHADOW_COORDS(3)
+				SHADOW_COORDS(4)
 				#else
 				V2F_SHADOW_CASTER;
 				#endif
 				float2 uv : TEXCOORD1;
                 float2 uv2 : TEXCOORD2;
-                float2 uv4 : TEXCOORD4;
+                float2 uv4 : TEXCOORD3;
 			};
 
             float3 rotMat(float3 angles, float3 vec)
@@ -122,6 +122,13 @@ Shader "VoiceRecognition/BRDF DoggoSkelly"
 
                 float3 rot1, rot2;
                 float3 pos1, pos2;
+
+                // Text box
+                if (all(v.uv2 < 0.004))
+                {
+                    float scaledTime = animTime / (animLength[ANIM_SPEAK] - 1.0);
+                    v.vertex.xz *= (anim == ANIM_SPEAK) ? speechBubbleCurve(scaledTime) : 0.0;
+                }
 
                 // Actuator
                 if (uvIndex.x > 3.0)
@@ -189,13 +196,6 @@ Shader "VoiceRecognition/BRDF DoggoSkelly"
 
                     v.vertex.xyz = rotMat(rot1, v.vertex.xyz);
                     v.vertex.xyz += pos1;
-                }
-
-                // Text box
-                if (all(v.uv2 < 0.004))
-                {
-                	float scaledTime = saturate(animTime / (animLength[ANIM_SPEAK] - 1.0));
-                	v.vertex.xz *= anim == ANIM_SPEAK ? speechBubbleCurve(scaledTime) : 0.0;
                 }
 
                 // Body
@@ -279,7 +279,7 @@ Shader "VoiceRecognition/BRDF DoggoSkelly"
                 }
                 else if (isSpeechBubble)
                 {
-                	texCol = speechBubble;
+                    texCol = speechBubble;
                 }
 
 				clip(texCol.a - _Cutoff);

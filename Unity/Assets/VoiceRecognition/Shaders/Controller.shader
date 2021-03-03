@@ -116,7 +116,7 @@
                     float3x3 lookMat = {rootRot1, rootRot2, rootRot3};
 
                     // Reset at the beginning
-                    doggoPos.xyz = _Reset > 0 ? i.centerPos : doggoPos.xyz;
+                    doggoPos.xyz = _Reset > 0 ? i.centerPos - float3(0, 0, 0.05) : doggoPos.xyz;
 
                     // majority rule polling
 
@@ -126,7 +126,7 @@
                     };
 
                     uint x;
-                    for (x = 1; x < 5; x++)
+                    for (x = 1; x < 7; x++)
                     {
                         uint4 val = floor(_Buffer.Load(uint3(x, 0, 0)));
                         [unroll]
@@ -147,7 +147,6 @@
                     if (doggoState.x == STATE_IDLE)
                     {
                         doggoState.x = (topIndex == COM_TUPPER) ? STATE_LISTEN : STATE_IDLE;
-                        doggoState.y = (topIndex == COM_TUPPER) ? COM_TUPPER : COM_SIL;
                         // Timer to reset back to default state
                         doggoState.z = DEFAULT_TIMER;
                         // Transition to animation play
@@ -162,7 +161,7 @@
                         doggoAngleAnims.w = mod(doggoAngleAnims.w + unity_DeltaTime.x * 8.0, animLength[ANIM_TURN_LEFT]);
                         
                         // doggoState.x = STATE_ANIMATION;
-                        // doggoState.y = ANIM_SPEAK;
+                        // doggoState.y = commandToAnimation(COM_SPEAK);
                     }
                     else if (doggoState.x == STATE_LISTEN)
                     {
@@ -173,8 +172,6 @@
                         // No input before timer, reset to default state
                         doggoState.x = doggoState.z < 1.0 ? STATE_IDLE : doggoState.x;
                         doggoState.y = doggoState.x == STATE_ANIMATION ? commandToAnimation(topIndex) : doggoState.y;
-                        doggoState.y = doggoState.x == STATE_SIT_DOWN ? COM_SIT : doggoState.y;
-                        doggoState.y = doggoState.x == STATE_FOLLOW ? COM_FOLLOW : doggoState.y;
                         doggoState.z = max(0.0, count >= 0.0333 ? doggoState.z - 1.0 : doggoState.z);
                         // Reset if tupper called again
                         doggoState.z = topIndex == COM_TUPPER ? DEFAULT_TIMER : doggoState.z;
@@ -204,7 +201,6 @@
                             mod(doggoAngleAnims.w + unity_DeltaTime.x, animLength[ANIM_SIT_IDLE]);
                         doggoAngleAnims.y = ANIM_SIT_IDLE;
                         doggoState.x = (topIndex == COM_TUPPER || topIndex == COM_STOP) ? STATE_SIT_UP : STATE_SIT_IDLE;
-                        doggoState.y = (topIndex == COM_TUPPER) ? COM_TUPPER : doggoState.y;
                         doggoState.w = 2.0;
                     }
                     else if (doggoState.x == STATE_SIT_UP)
@@ -232,7 +228,6 @@
                             mod(doggoAngleAnims.w + unity_DeltaTime.x, animLength[ANIM_PLAYDEAD_IDLE]);
                         doggoAngleAnims.y = ANIM_PLAYDEAD_IDLE;
                         doggoState.x = (topIndex == COM_TUPPER || topIndex == COM_STOP) ? STATE_PLAYDEAD_UP : STATE_PLAYDEAD_IDLE;
-                        doggoState.y = (topIndex == COM_TUPPER) ? COM_TUPPER : doggoState.y;
                         doggoState.w = 2.0;
                     }
                     else if (doggoState.x == STATE_PLAYDEAD_UP)
@@ -276,7 +271,7 @@
                         doggoState.x = doggoAngleAnims.w > animLength[uint(doggoState.y)] - 1.0 ?
                             STATE_IDLE : STATE_ANIMATION;
                         doggoState.x = (topIndex == COM_STOP) ? STATE_IDLE : doggoState.x;
-                        doggoAngleAnims.y = uint(doggoState.y);
+                        doggoAngleAnims.y = doggoState.y;
                         doggoAngleAnims.w = doggoState.w < 1.0 ? 0.0 : doggoAngleAnims.w + unity_DeltaTime.x * 4.0;
                         doggoState.w = 1.0;
                     }

@@ -1,5 +1,6 @@
 # Voice Recognition Shader
  Audio detection with visemes controlling a robot doggo done with shaders.
+
 <img src="Media/project.png"/>
 <img src="Media/ingame1.png"/>
 
@@ -19,7 +20,7 @@ For people that can clone the avatar by ID
  
 ## Questions
 #### Can I add this to my own avatar?
-* No, the setup I do to read the visemes from shaders is too difficult to replicate
+* No, the setup I do to read the visemes for the shaders is too difficult to replicate on every different avatar
 
 #### Why do I need to face the +Z direction
 * I don't know but the initial rotation of the model matters. Since the doggo faces +Z, you have to face the same direction as the doggo or else it'll have trouble facing you

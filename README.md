@@ -5,7 +5,8 @@
 <img src="Media/ingame1.png"/>
 
 ## Demo
-
+Video Link
+* https://twitter.com/SCRNinVR/status/1367343416644886531
 For people that can clone the avatar by ID
 * https://vrchat.com/home/avatar/avtr_c270cd25-9e71-40cb-916f-6f588519cea4
 

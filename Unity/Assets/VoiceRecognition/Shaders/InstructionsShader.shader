@@ -58,6 +58,11 @@
                 float3 viewDir = mul((float3x3)unity_ObjectToWorld, UNITY_MATRIX_IT_MV[2].xyz);
                 float ang = atan2(viewDir.x, viewDir.z) / UNITY_PI * 180.0 + 180;
 
+                if (abs(i.uv.y - 0.207) < 0.065)
+                {
+                    col *= fmod(_Time.y, 0.75) <= 0.375 ? 0.0 : 1.0;
+                }
+
                 if (abs(i.uv.y - 0.76) < 0.03125 && abs(i.uv.x - 0.7266) < 0.03125)
                 {
                     i.uv.y = (i.uv.y - 0.732) / 0.0625;
@@ -65,6 +70,7 @@
                     float4 dirImg = tex2D(_DirTex, i.uv);
                     col.rgb = dirImg.rgb * dirImg.a;
                 }
+
                 // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
                 return col;

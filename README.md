@@ -1,6 +1,7 @@
 # Voice Recognition Shader
  Audio detection with visemes controlling a robot doggo done with shaders.
 
+<img src="Python/fig.png"/>
 <img src="Media/project.png"/>
 <img src="Media/ingame1.png"/>
 

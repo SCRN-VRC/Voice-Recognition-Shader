@@ -35,7 +35,7 @@ For people that can clone the avatar by ID
 * ~40 minutes of training data gathered from volunteers and scraped off YouTube.
 * The 14 visemes are ordered from **bottom to top** in the following order: **PP, FF, TH, DD, kk, CH,SS, nn, RR, aa, E, ih, oh, ou**, from the picture above.
 * The network was trained in Python using tensorflow and baked into a texture using /Editor/BakeWeightsVoiceCNN.cs.
-* If you wish to train your own network, please refer to [Python Code](##Python-Code).
+* If you wish to train your own network, please refer to [Python Code](#python-code).
 
 #### VisemesToFloats.shader
 * Two invisible triangles were added to the mesh of Robot Kyle. The XYZ positions of the vertices corresponds to 3 of the 14 visemes. For example, the position of one of the vertices would be (PP, FF, TH). If PP were active, then the vertex would move to (1, 0, 0) from (0, 0, 0). The vertex positions are rendered as color with this geometry shader for the neural network.
@@ -79,18 +79,18 @@ If you wish to run the C++ code.
 You can follow a guide on OpenCV + Visual Studio here https://www.deciphertechnic.com/install-opencv-with-visual-studio/
 
 # Resources
-https://sketchfab.com/3d-models/spot-mini-rigged-5dcbee77730640269cef5bd2587e328a
+1. https://sketchfab.com/3d-models/spot-mini-rigged-5dcbee77730640269cef5bd2587e328a
 Spot Mini (Rigged) by Greg McKechnie
 
-https://assetstore.unity.com/packages/3d/characters/robots/space-robot-kyle-4696
+2. https://assetstore.unity.com/packages/3d/characters/robots/space-robot-kyle-4696
 Space Robot Kyle by Unity
 
-https://bowlroll.net/file/58197
+3. https://bowlroll.net/file/58197
 チルノver.2017.09.09 by 追憶の機械人形
 
-https://github.com/VRLabs/VRChat-Avatars-3.0
+4. https://github.com/VRLabs/VRChat-Avatars-3.0
 World Constraint by lindesu
 
-Thanks d4rkpl4y3r and [Merlin](https://github.com/MerlinVR) for the help on the code.
+* Thanks d4rkpl4y3r and [Merlin](https://github.com/MerlinVR) for the help on the code.
 
-And thanks to everyone that provided training data for the voice recognition: FreelancerB10, Morioh, Reda-Ou, [ScruffyRuffles](https://github.com/ScruffyRules), [orels1](https://github.com/orels1), uoppoH, んなあぁ
+* And thanks to everyone that provided training data for the voice recognition: FreelancerB10, Morioh, Reda-Ou, [ScruffyRuffles](https://github.com/ScruffyRules), [orels1](https://github.com/orels1), uoppoH, んなあぁ

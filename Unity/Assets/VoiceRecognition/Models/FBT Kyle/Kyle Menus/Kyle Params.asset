@@ -33,3 +33,7 @@ MonoBehaviour:
     valueType: 2
     saved: 0
     defaultValue: 0
+  - name: ToggleFollow
+    valueType: 2
+    saved: 0
+    defaultValue: 0

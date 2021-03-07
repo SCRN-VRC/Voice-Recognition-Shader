@@ -1683,6 +1683,10 @@ MonoBehaviour:
     name: VtoF Off
   - hash: 1001570637
     name: VtoF On
+  - hash: 1575508595
+    name: FollowOnlyOn
+  - hash: 2002479412
+    name: FollowOnlyOff
   autoFootsteps: 1
   autoLocomotion: 1
 --- !u!1 &1592116305
@@ -2514,6 +2518,7 @@ GameObject:
   - component: {fileID: 1584707123}
   - component: {fileID: 1592017750}
   - component: {fileID: 1592017751}
+  - component: {fileID: 1592116732}
   m_Layer: 9
   m_Name: KyleModified
   m_TagString: Untagged
@@ -2521,6 +2526,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1592116732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592116731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 229740497, guid: 4ecd63eff847044b68db9453ce219299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentType: 0
 --- !u!1 &1592116733
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@
         _VoiceCNN ("VoiceCNN Input", 2D) = "black" {}
         _Buffer ("Buffer", 2D) = "black" {}
         _Reset ("Reset", Int) = 0
+        _FollowOnly ("Follow Only", Int) = 0
         _MaxDist ("Max Distance", Float) = 0.02
     }
     SubShader
@@ -48,6 +49,7 @@
             float4 _Buffer_TexelSize;
             float _MaxDist;
             int _Reset;
+            int _FollowOnly;
 
             v2f vert (appdata v)
             {
@@ -160,6 +162,9 @@
                         doggoAngleAnims.x = ang;
                         doggoAngleAnims.w = mod(doggoAngleAnims.w + unity_DeltaTime.x * 8.0, animLength[ANIM_TURN_LEFT]);
                         
+                        // Ignore commands, only follow
+                        doggoState.x = _FollowOnly ? STATE_FOLLOW : doggoState.x;
+
                         // doggoState.x = STATE_ANIMATION;
                         // doggoState.y = commandToAnimation(COM_SPEAK);
                     }
@@ -242,7 +247,8 @@
                     {
                         doggoState.x = (topIndex == COM_STOP) ? STATE_IDLE : STATE_FOLLOW;
                         doggoState.x = (topIndex == COM_STAY) ? STATE_IDLE : doggoState.x;
-
+                        doggoState.x = _FollowOnly ? STATE_FOLLOW : doggoState.x;
+                        
                         // Animations
                         float3 distToTarget = i.centerPos - doggoPos.xyz;
 

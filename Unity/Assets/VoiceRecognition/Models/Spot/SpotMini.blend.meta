@@ -1,0 +1,145 @@
+fileFormatVersion: 2
+guid: d35e1856e2988de48ad1ecb3ccc9817e
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: spot_actuator_FL
+    100002: spot_actuator_FL_end
+    100004: spot_actuator_FR
+    100006: spot_actuator_FR_end
+    100008: spot_actuator_RL
+    100010: spot_actuator_RL_end
+    100012: spot_actuator_RR
+    100014: spot_actuator_RR_end
+    100016: spot_armature
+    100018: spot_body
+    100020: spot_lowerLeg_FL
+    100022: spot_lowerLeg_FR
+    100024: spot_lowerLeg_RL
+    100026: spot_lowerLeg_RR
+    100028: spot_rigged
+    100030: spot_shoulder_FL
+    100032: spot_shoulder_FR
+    100034: spot_shoulder_RL
+    100036: spot_shoulder_RR
+    100038: spot_upperLeg_FL
+    100040: spot_upperLeg_FR
+    100042: spot_upperLeg_RL
+    100044: spot_upperLeg_RR
+    100046: //RootNode
+    400000: spot_actuator_FL
+    400002: spot_actuator_FL_end
+    400004: spot_actuator_FR
+    400006: spot_actuator_FR_end
+    400008: spot_actuator_RL
+    400010: spot_actuator_RL_end
+    400012: spot_actuator_RR
+    400014: spot_actuator_RR_end
+    400016: spot_armature
+    400018: spot_body
+    400020: spot_lowerLeg_FL
+    400022: spot_lowerLeg_FR
+    400024: spot_lowerLeg_RL
+    400026: spot_lowerLeg_RR
+    400028: spot_rigged
+    400030: spot_shoulder_FL
+    400032: spot_shoulder_FR
+    400034: spot_shoulder_RL
+    400036: spot_shoulder_RR
+    400038: spot_upperLeg_FL
+    400040: spot_upperLeg_FR
+    400042: spot_upperLeg_RL
+    400044: spot_upperLeg_RR
+    400046: //RootNode
+    2100000: spot
+    2100002: "\u6C37\u7FBD\u6839"
+    4300000: spot_rigged
+    9500000: //RootNode
+    13700000: spot_rigged
+    2186277476908879412: ImportLogs
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 1
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

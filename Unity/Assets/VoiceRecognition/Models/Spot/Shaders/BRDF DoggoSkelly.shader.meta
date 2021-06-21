@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: e46ab01bc3f199248abb0338f84500fa
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _MainTex: {fileID: 2800000, guid: 3495c5374559afd478d06e4dbb13ecff, type: 3}
+  - _Metallic: {fileID: 2800000, guid: 362099142798b5f4ba2a218c0e5439cc, type: 3}
+  - _NormalMap: {fileID: 2800000, guid: 24cb4ef39203ff843918f4d5e9e4e2c2, type: 3}
+  - _EmissionMap: {fileID: 2800000, guid: 30b0057ea859e9e439e58bb5a11a0091, type: 3}
+  - _BakedAnims: {fileID: 2800000, guid: b88185a525864cd429aa8969ebd017a6, type: 2}
+  - _ControllerTex: {fileID: 8400000, guid: 473541b15f8e65a438fcb7f08bc14945, type: 2}
+  - _WingsTex: {fileID: 2800000, guid: 35db59fbcc3c3b641aee01aefbc3ddcb, type: 3}
+  - _SpeechTex: {fileID: 2800000, guid: b9a3fd8b5dc95e04dbc4fc54003363be, type: 3}
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

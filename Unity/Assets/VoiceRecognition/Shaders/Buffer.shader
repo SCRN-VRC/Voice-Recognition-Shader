@@ -52,6 +52,7 @@
                 o.uv.z = (distance(_WorldSpaceCameraPos,
                     mul(unity_ObjectToWorld, float4(0,0,0,1)).xyz) > _MaxDist) ?
                     -1 : 1;
+                o.uv.z = unity_OrthoParams.w ? o.uv.z : -1;
                 return o;
             }
 

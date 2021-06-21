@@ -23,16 +23,6 @@ MonoBehaviour:
     subMenu: {fileID: 0}
     subParameters: []
     labels: []
-  - name: Toggle Visemes to Camera
-    icon: {fileID: 2800000, guid: ab6dae33d7a158a44a4fff12d8567a91, type: 3}
-    type: 102
-    parameter:
-      name: ToggleToCamera
-    value: 1
-    style: 0
-    subMenu: {fileID: 0}
-    subParameters: []
-    labels: []
   - name: Follow ONLY - Ignore Voice
     icon: {fileID: 2800000, guid: 011229dd2f6f5f64f8965a08d3434654, type: 3}
     type: 102
